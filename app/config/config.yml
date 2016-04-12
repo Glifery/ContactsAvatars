@@ -71,10 +71,18 @@ fos_user:
     user_class: AppBundle\Entity\User
 
 hwi_oauth:
-    firewall_names: [secured_area]
+    http_client:
+        verify_peer: false
+    connect:
+        account_connector: google_user_provider
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            google: id
     resource_owners:
-        any_name:
+        google:
             type:                google
-            client_id:           "915721009960-e9vt3ad21qimetvve15vt32lchbu8425.apps.googleusercontent.com"
-            client_secret:       "wqtVTDn_30zV4SDZeAp2FO3C"
-            scope:               "email profile contacts"
+            client_id:           "915721009960-9cijitpijm4i41qnevhhle4u21a6h4fh.apps.googleusercontent.com"
+            client_secret:       "qGop4bxfSTU0XCI-8Jkd7uDa"
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/contacts"

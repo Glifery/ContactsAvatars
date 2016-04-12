@@ -20,25 +20,19 @@ security:
 
         main:
             pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-            logout:       true
-            anonymous:    true
-
-        secured_area:
-            anonymous: ~
             oauth:
                 resource_owners:
                     google:             "/login/check-google"
-                login_path:        /login
-                use_forward:       false
-                failure_path:      /login
+                login_path:        /login/google
+                failure_path:      /login/google
 
                 oauth_user_provider:
-                    service: hwi_oauth.user.provider.fosub_bridge.def
+                    service: google_user_provider
+            logout:       true
+            anonymous:    ~
 
     access_control:
+        - { path: ^/$, role: IS_AUTHENTICATED_REMEMBERED  }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
