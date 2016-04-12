@@ -7,3 +7,7 @@ services:
     google_user_provider:
         class: AppBundle\Security\GoogleUserProvider
         arguments: ["@fos_user.user_manager.default", { google: googleId }]
+
+    google_contact_provider:
+        class: AppBundle\Service\GoogleContactProvider
+        arguments: ["@guzzle.client"]
