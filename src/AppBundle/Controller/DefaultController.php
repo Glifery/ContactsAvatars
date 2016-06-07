@@ -25,18 +25,15 @@ class DefaultController extends Controller
      */
     public function testAction(Request $request)
     {
-        $template = 'https://www.google.com/m8/feeds/contacts/default/full?alt=json&v=3.0&oauth_token=%s';
+//        $template = 'https://www.google.com/m8/feeds/contacts/default/full?alt=json&v=3.0&oauth_token=%s';
 //        https://github.com/google/google-api-php-client/issues/462
 //        https://developers.google.com/google-apps/contacts/v3/#retrieving_all_contacts
 
         /** @var User $user */
         $user = $this->getUser();
         $token = $user->getGoogleAccessToken();
-        $fff = $this->get('google_contact_provider')->getContactsByToken($token);
-        die($fff);
+        $contacts = $this->get('google_contact_provider')->getContactsByToken($token);
 
-        $client = $this->get('guzzle.client');
-        $request = $client->get('http://www.example.com/');
-        $request = $request;
+        return $this->render('default/test.html.twig', compact('contacts'));
     }
 }

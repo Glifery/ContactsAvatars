@@ -21,7 +21,6 @@ class GoogleUserProvider extends BaseClass
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
             $previousUser->setGoogleId(null);
             $previousUser->setGoogleAccessToken(null);
-            $this->userManager->updateUser($previousUser);
         }
 
         //we connect current user

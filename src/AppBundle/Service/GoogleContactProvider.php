@@ -25,10 +25,9 @@ class GoogleContactProvider
         $request = $this->guzzle->get($url);
         $response = $request->send();
         $responseBody = (string)$response->getBody();
-//        $responseBody = $response->json();
-        $ff = $this->decode($responseBody);
+        $contacts = $this->decode($responseBody);
 
-        return $responseBody;
+        return $contacts;
     }
 
     private function decode($response)
@@ -47,9 +46,11 @@ class GoogleContactProvider
 
                 if ($key == 'link') {
                     if ($attributes['rel'] == 'edit') {
-                        $contactDetails['editURL'] = (string) $attributes['href'];
+                        $contactDetails['editUrl'] = (string) $attributes['href'];
                     } elseif ($attributes['rel'] == 'self') {
-                        $contactDetails['selfURL'] = (string) $attributes['href'];
+                        $contactDetails['selfUrl'] = (string) $attributes['href'];
+                    } elseif ($attributes['type'] == 'image/*') {
+                        $contactDetails['image'] = (string) $attributes['href'];
                     }
                 }
             }
@@ -60,7 +61,9 @@ class GoogleContactProvider
                 $attributes = $value->attributes();
 
                 if ($key == 'email') {
-                    $contactDetails[$key] = (string) $attributes['address'];
+                    $contactDetails[$key] = (string)$attributes['address'];
+                } elseif ($key == 'name') {
+                    continue;
                 } else {
                     $contactDetails[$key] = (string) $value;
                 }
